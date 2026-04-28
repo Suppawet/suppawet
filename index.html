@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Invite from Suppawet 💙</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #cceeff;
+  overflow: hidden;
+}
+
+/* 🧠 หน้าเริ่ม */
+.stage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🖼️ รูปปกติ */
+#mainImage {
+  width: 200px;
+  border-radius: 15px;
+}
+
+/* 🔘 ปุ่ม */
+button {
+  margin-top: 15px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  background: #28a745;
+  color: white;
+  cursor: pointer;
+}
+
+/* 🎥 fullscreen video */
+#videoScreen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: black;
+}
+
+/* 🎥 video */
+#catDance {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 💙 text overlay */
+#textOverlay {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 10px black;
+}
+</style>
+</head>
+
+<body>
+
+<div class="stage">
+
+  <h1>You are invited 💙</h1>
+
+  <img id="mainImage" src="your-image.jpg">
+
+  <button onclick="sayYes()">Yes 💙</button>
+
+</div>
+
+<!-- 🎥 FULLSCREEN VIDEO -->
+<div id="videoScreen">
+
+  <video id="catDance" loop muted playsinline>
+    <source src="scuba-cat.mp4" type="video/mp4">
+  </video>
+
+  <div id="textOverlay">
+    YAYYY 💙 See you tonight at 8 PM mahal :)
+  </div>
+
+</div>
+
+<audio id="yesSound" src="yes.mp3"></audio>
+<audio id="scubaMusic" src="scuba.mp3" loop></audio>
+
+<script>
+function sayYes() {
+
+  document.getElementById("yesSound").play();
+
+  setTimeout(() => {
+    document.getElementById("scubaMusic").play();
+  }, 300);
+
+  // 🖼️ hide normal page
+  document.querySelector(".stage").style.display = "none";
+
+  // 🎥 show fullscreen video
+  const screen = document.getElementById("videoScreen");
+  screen.style.display = "block";
+
+  const video = document.getElementById("catDance");
+  video.currentTime = 0;
+  video.play();
+}
+</script>
+
+</body>
+</html>
