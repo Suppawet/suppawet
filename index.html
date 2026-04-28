@@ -76,7 +76,6 @@ button {
   tonight at 8 PM 🎬
 </h1>
 
-<!-- ✅ รูปอยู่กลาง -->
 <img id="mainImage" src="your-image.jpg">
 
 <div class="buttons">
@@ -86,7 +85,6 @@ button {
 
 <div id="result"></div>
 
-<!-- เสียง -->
 <audio id="loveSound" src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3"></audio>
 <audio id="scubaSound" src="scuba.mp3"></audio>
 
@@ -97,24 +95,31 @@ let noClickCount = 0;
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-// ปุ่ม No หนี
-noBtn.addEventListener("mouseover", () => {
+// 🔥 ฟังก์ชันสุ่มตำแหน่ง
+function moveNoButton() {
   const x = Math.random() * (window.innerWidth - 100);
   const y = Math.random() * (window.innerHeight - 100);
 
+  noBtn.style.position = "fixed";
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
-});
+}
 
-// กด No
+// 🏃‍♂️ หนีตลอด
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("mousemove", moveNoButton);
+
+// ❌ กด No
 noBtn.addEventListener("click", () => {
+  moveNoButton();
+
   noClickCount++;
 
   const messages = [
     "Really? 🥺",
     "Think again 😭",
     "Come watch with me...",
-    "I really want to go with you 😢",
+    "I really want to watch with you 😢",
     "One more chance? 💔",
     "Pleaseeee 🥺💙"
   ];
@@ -126,25 +131,24 @@ noBtn.addEventListener("click", () => {
   yesBtn.style.transform = `scale(${yesSize})`;
 });
 
-// กด Yes
+// ✅ กด Yes
 function sayYes() {
   document.getElementById("result").innerText =
     "yeyyy see you tonight mahal ko 💙😆🎬";
 
-  // เล่นเสียง
   document.getElementById("loveSound").play();
   document.getElementById("scubaSound").play();
 
-  // ✅ เปลี่ยนรูปเดิม → แมวเต้น (ตำแหน่งเดิม)
-  document.getElementById("mainImage").src = "cat.gif";
+  // 🐱 แมวเต้นจากเน็ต
+  document.getElementById("mainImage").src =
+    "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif";
 
-  // หัวใจลอย
   for (let i = 0; i < 20; i++) {
     createHeart();
   }
 }
 
-// หัวใจลอย
+// 💙 หัวใจลอย
 function createHeart() {
   const heart = document.createElement("div");
   heart.innerText = "💙";
@@ -155,23 +159,15 @@ function createHeart() {
   heart.style.animation = "floatUp 2s linear";
   document.body.appendChild(heart);
 
-  setTimeout(() => {
-    heart.remove();
-  }, 2000);
+  setTimeout(() => heart.remove(), 2000);
 }
 
 // animation
 const style = document.createElement("style");
 style.innerHTML = `
 @keyframes floatUp {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-300px);
-    opacity: 0;
-  }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-300px); opacity: 0; }
 }`;
 document.head.appendChild(style);
 </script>
