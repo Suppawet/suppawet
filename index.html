@@ -11,22 +11,28 @@ body {
   text-align: center;
   background: #cceeff;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   overflow: hidden;
-}
-
-.container {
-  margin-top: 40px;
 }
 
 h1 {
   color: #0077cc;
-  transition: 0.3s;
-  padding: 0 20px;
+  margin-bottom: 10px;
+}
+
+img {
+  width: 220px;
+  border-radius: 15px;
+  margin: 15px 0;
 }
 
 .buttons {
   position: relative;
-  height: 250px;
+  width: 300px;
+  height: 200px;
 }
 
 button {
@@ -42,9 +48,8 @@ button {
 #yesBtn {
   background: #28a745;
   color: white;
-  left: 40%;
+  left: 20%;
   top: 50%;
-  transform: scale(1);
 }
 
 #noBtn {
@@ -55,7 +60,7 @@ button {
 }
 
 #result {
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 24px;
   color: #0077cc;
   font-weight: bold;
@@ -65,26 +70,25 @@ button {
 
 <body>
 
-<div class="container">
-  <h1 id="question">
-    You are invited to watch a movie with <br>
-    <b>Namo Suppawet</b> <br>
-    tonight at 8 PM 🎬
-  </h1>
+<h1 id="question">
+  You are invited to watch a movie with <br>
+  <b>Namo Suppawet</b> <br>
+  tonight at 8 PM 🎬
+</h1>
 
-  <div class="buttons">
-    <button id="yesBtn" onclick="sayYes()">Yes 💙</button>
-    <button id="noBtn">No 😭</button>
-  </div>
+<!-- ✅ รูปอยู่กลาง -->
+<img id="mainImage" src="your-image.jpg">
 
-  <div id="result"></div>
-
-  <!-- เสียงเดิม -->
-  <audio id="loveSound" src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3"></audio>
-
-  <!-- 🎵 เพลงของคุณ -->
-  <audio id="scubaSound" src="scuba.mp3"></audio>
+<div class="buttons">
+  <button id="yesBtn" onclick="sayYes()">Yes 💙</button>
+  <button id="noBtn">No 😭</button>
 </div>
+
+<div id="result"></div>
+
+<!-- เสียง -->
+<audio id="loveSound" src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3"></audio>
+<audio id="scubaSound" src="scuba.mp3"></audio>
 
 <script>
 let yesSize = 1;
@@ -93,7 +97,7 @@ let noClickCount = 0;
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-// No button หนี
+// ปุ่ม No หนี
 noBtn.addEventListener("mouseover", () => {
   const x = Math.random() * (window.innerWidth - 100);
   const y = Math.random() * (window.innerHeight - 100);
@@ -102,7 +106,7 @@ noBtn.addEventListener("mouseover", () => {
   noBtn.style.top = y + "px";
 });
 
-// กด No → ข้อความเปลี่ยน + Yes ใหญ่ขึ้น
+// กด No
 noBtn.addEventListener("click", () => {
   noClickCount++;
 
@@ -127,11 +131,14 @@ function sayYes() {
   document.getElementById("result").innerText =
     "yeyyy see you tonight mahal ko 💙😆🎬";
 
-  // เล่นเสียงทั้งสอง
+  // เล่นเสียง
   document.getElementById("loveSound").play();
   document.getElementById("scubaSound").play();
 
-  // สร้างหัวใจ
+  // ✅ เปลี่ยนรูปเดิม → แมวเต้น (ตำแหน่งเดิม)
+  document.getElementById("mainImage").src = "cat.gif";
+
+  // หัวใจลอย
   for (let i = 0; i < 20; i++) {
     createHeart();
   }
