@@ -2,120 +2,171 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Invite from Suppawet 💙</title>
+<title>invite from suppawet 💙</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
+  text-align: center;
   background: #cceeff;
+  height: 100vh;
   overflow: hidden;
 }
 
-/* 🧠 หน้าเริ่ม */
-.stage {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.container {
+  margin-top: 40px;
 }
 
-/* 🖼️ รูปปกติ */
-#mainImage {
-  width: 200px;
-  border-radius: 15px;
+h1 {
+  color: #0077cc;
+  transition: 0.3s;
+  padding: 0 20px;
 }
 
-/* 🔘 ปุ่ม */
+.buttons {
+  position: relative;
+  height: 250px;
+}
+
 button {
-  margin-top: 15px;
   padding: 15px 30px;
+  font-size: 18px;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
+  position: absolute;
+  transition: 0.2s;
+}
+
+#yesBtn {
   background: #28a745;
   color: white;
-  cursor: pointer;
+  left: 40%;
+  top: 50%;
+  transform: scale(1);
 }
 
-/* 🎥 fullscreen video */
-#videoScreen {
-  position: fixed;
-  inset: 0;
-  display: none;
-  background: black;
-}
-
-/* 🎥 video */
-#catDance {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 💙 text overlay */
-#textOverlay {
-  position: absolute;
-  top: 20px;
-  width: 100%;
-  text-align: center;
-
-  font-size: 22px;
-  font-weight: bold;
+#noBtn {
+  background: #dc3545;
   color: white;
-  text-shadow: 0 2px 10px black;
+  left: 55%;
+  top: 50%;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #0077cc;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="stage">
+<div class="container">
+  <h1 id="question">
+    You are invited to watch a movie with <br>
+    <b>Namo Suppawet</b> <br>
+    tonight at 8 PM 🎬
+  </h1>
 
-  <h1>You are invited 💙</h1>
-
-  <img id="mainImage" src="your-image.jpg">
-
-  <button onclick="sayYes()">Yes 💙</button>
-
-</div>
-
-<!-- 🎥 FULLSCREEN VIDEO -->
-<div id="videoScreen">
-
-  <video id="catDance" loop muted playsinline>
-    <source src="scuba-cat.mp4" type="video/mp4">
-  </video>
-
-  <div id="textOverlay">
-    YAYYY 💙 See you tonight at 8 PM mahal :)
+  <div class="buttons">
+    <button id="yesBtn" onclick="sayYes()">Yes 💙</button>
+    <button id="noBtn">No 😭</button>
   </div>
 
+  <div id="result"></div>
+
+  <!-- เสียงเดิม -->
+  <audio id="loveSound" src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3"></audio>
+
+  <!-- 🎵 เพลงของคุณ -->
+  <audio id="scubaSound" src="scuba.mp3"></audio>
 </div>
 
-<audio id="yesSound" src="yes.mp3"></audio>
-<audio id="scubaMusic" src="scuba.mp3" loop></audio>
-
 <script>
-function sayYes() {
+let yesSize = 1;
+let noClickCount = 0;
 
-  document.getElementById("yesSound").play();
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+// No button หนี
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+});
+
+// กด No → ข้อความเปลี่ยน + Yes ใหญ่ขึ้น
+noBtn.addEventListener("click", () => {
+  noClickCount++;
+
+  const messages = [
+    "Really? 🥺",
+    "Think again 😭",
+    "Come watch with me...",
+    "I really want to go with you 😢",
+    "One more chance? 💔",
+    "Pleaseeee 🥺💙"
+  ];
+
+  document.getElementById("question").innerText =
+    messages[Math.min(noClickCount, messages.length - 1)];
+
+  yesSize += 0.3;
+  yesBtn.style.transform = `scale(${yesSize})`;
+});
+
+// กด Yes
+function sayYes() {
+  document.getElementById("result").innerText =
+    "yeyyy see you tonight mahal ko 💙😆🎬";
+
+  // เล่นเสียงทั้งสอง
+  document.getElementById("loveSound").play();
+  document.getElementById("scubaSound").play();
+
+  // สร้างหัวใจ
+  for (let i = 0; i < 20; i++) {
+    createHeart();
+  }
+}
+
+// หัวใจลอย
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.innerText = "💙";
+  heart.style.position = "fixed";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.top = window.innerHeight + "px";
+  heart.style.fontSize = "24px";
+  heart.style.animation = "floatUp 2s linear";
+  document.body.appendChild(heart);
 
   setTimeout(() => {
-    document.getElementById("scubaMusic").play();
-  }, 300);
-
-  // 🖼️ hide normal page
-  document.querySelector(".stage").style.display = "none";
-
-  // 🎥 show fullscreen video
-  const screen = document.getElementById("videoScreen");
-  screen.style.display = "block";
-
-  const video = document.getElementById("catDance");
-  video.currentTime = 0;
-  video.play();
+    heart.remove();
+  }, 2000);
 }
+
+// animation
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-300px);
+    opacity: 0;
+  }
+}`;
+document.head.appendChild(style);
 </script>
 
 </body>
